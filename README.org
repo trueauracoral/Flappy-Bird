@@ -1,0 +1,26 @@
+* Pong in JS (ITCH BRANCH)
+This JS project has all the JS in one file, so that way it can work on an iframe, specifically itch.
+
+Play here: https://trueauracoral.itch.io/pong-js 
+
+** Tutorials I used
+- https://www.youtube.com/watch?v=8_zUEh7Vqhs (Start Screen)
+- https://www.youtube.com/watch?v=HXquxWtE5vA (Setting up node and making classes)
+- https://www.youtube.com/playlist?list=PLGkge_Sgu19qmLtuTPse7SNaV_IoJ6RLW (Pong Concepts and base code)
+- https://jakesgordon.com/writing/javascript-game-foundations-sound/ (Making sound)
+- I used MDN https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash
+- StackOverflow had some tips and tricks for fine tuning the AI. The AI is still not good
+
+** TODO List
+I will come back to this project and complete it mark my words. However I must move on!!
+- [-] Pong [88%]
+  - [X] Paddles
+  - [X] Ball
+  - [X] AI
+  - [X] Score
+  - [X] Sounds
+  - [ ] 2 Players
+  I cannot get 2 players working because it's hard to communicate from the html, to the js, to the class of paddle. I need even more modularity to be able to not hard code the keybindings. 
+  - [X] Menu
+  - [X] Dashed line
+  - [X] Font
