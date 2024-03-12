@@ -13,6 +13,7 @@ var die = false;
 
 var eagle = loadImage('./img/eagle.png');
 var floor = loadImage('./img/floor.png');
+var background = loadImage('./img/bg.png');
 
 function loadImage(src) {
     var img = new Image();
@@ -135,6 +136,7 @@ function gameUpdate() {
 }
 
 function gameDraw() {
+    ctx.drawImage(background, 0, 0);
     Bird.draw();
     Floor.draw();
 }
@@ -149,7 +151,7 @@ function gameLoop() {
 }
 
 function floorCollide() {
-    if (Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 25))) {
+    if (Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
         die = true;
         console.log(die)
     }

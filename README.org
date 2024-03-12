@@ -8,6 +8,7 @@ Play here:
 - https://stackoverflow.com/questions/24386354/execute-js-code-after-pressing-the-spacebar (Modified a bit to get input working)
 - https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3 (JS spritesheet Animation tutorial)
 - https://jakesgordon.com/writing/javascript-game-foundations-loading-assets/ (Modified a bit but tutorial on loading images)
+- https://stackoverflow.com/questions/3536055/stopping-a-javascript-function-when-a-certain-condition-is-met (Helped me implement die)
 
 - [ ] Flappy Bird [%]
   - [X] Assets
