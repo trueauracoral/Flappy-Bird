@@ -61,7 +61,6 @@ class bird {
     }
     
     update() {
-        console.log(die);
         if (die == true) {
             return;
         }
@@ -82,6 +81,9 @@ class bird {
     };
     
     draw() {
+        // Sprite Sheet moment
+        var width = eagle.width / 4;
+        var height = eagle.height;
         ctx.save();
 
         ctx.translate(this.pos.x + this.radius / 2, this.pos.y + this.radius / 2);
@@ -93,10 +95,10 @@ class bird {
         // Draw the bird
         ctx.drawImage(
             eagle, 
-            this.frameX * 26 * 2, 0,
-            26*2, 18*2,
+            this.frameX * width, 0,
+            width, height,
             -this.radius / 2, -this.radius / 2, // Draw the bird centered at (0, 0)
-            26*2, 18*2
+            width, height
         );
 
         // Restore the previous transformation state of the canvas
@@ -153,7 +155,7 @@ function gameLoop() {
 function floorCollide() {
     if (Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
         die = true;
-        console.log(die)
+        console.log("Collided with floor.")
     }
 }
 
