@@ -4,16 +4,22 @@ This JS project has all the JS in one file, so that way it can work on an iframe
 Play here: 
 
 ** Tutorials I used
-- 
+- https://www.youtube.com/watch?v=WSW-5m8lRMs&list=PLXxCTbwLyQPf8SAS9XOZGMel1-k92aXP-&index=2&t=12s (Codebullet codes flappy bird)
+- https://stackoverflow.com/questions/24386354/execute-js-code-after-pressing-the-spacebar (Modified a bit to get input working)
+- https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3 (JS spritesheet Animation tutorial)
+- https://jakesgordon.com/writing/javascript-game-foundations-loading-assets/ (Modified a bit but tutorial on loading images)
 
 - [ ] Flappy Bird [%]
-  - [ ] Assets
-    - [ ] bird
-    - [ ] pipes
-    - [ ] ground
-    - [ ] background
+  - [X] Assets
+    - [X] bird
+    - [X] pipes
+    - [X] ground
+    - [X] background
   - [ ] Pipes Wrap around
-  - [ ] Bird and Gravity
+    - [ ] Pipes Collision
+  - [X] Bird and Gravity
+  - [X] Floor that can move
+  - [X] Die
   - [ ] Pass through point and score
   - [ ] Game Over screen with best and current score
   - [ ] Medals
