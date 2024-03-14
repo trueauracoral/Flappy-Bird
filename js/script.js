@@ -8,18 +8,34 @@ canvas.height = 640;
 const halfWidth = canvas.width / 2;
 const halfHeight = canvas.height / 2;
 
-const gravity = 0.7;
+const gravity = 0.5;
 var die = false;
 
 var eagle = loadImage('./img/eagle.png');
 var floor = loadImage('./img/floor.png');
 var background = loadImage('./img/bg.png');
+var icicles = loadImage('./icicles.png');
 
 function loadImage(src) {
     var img = new Image();
     img.src = src;
     return img;
 }  
+
+class Icicles {
+    constructor(pos, velocity) {
+        this.pos = pos;
+        this.velocity = velocity;
+    }
+
+    update() {
+        this.pos.x += this.velocity.x;
+    }
+
+    draw() {
+        ctx.drawImage(icicles, this.pos.x, this.pos.y);
+    }
+}
 
 class ground {
     constructor(pos, velocity) {
@@ -31,7 +47,7 @@ class ground {
         if (die) {
             return;
         }
-
+        
         this.pos.x += this.velocity.x;
         if (this.pos.x < -floor.width) {
             this.pos.x += floor.width;
@@ -107,9 +123,13 @@ class bird {
 }
 
 
-const Bird = new bird(vec2(halfWidth - 50, halfHeight), vec2(5,0), 15)
-const Floor = new ground(vec2(0, canvas.height-floor.height), vec2(-5, 5))
-console.log(canvas.height - floor.height);
+const Bird = new bird(vec2(halfWidth - 50, halfHeight), vec2(5,0), 15);
+console.log(halfWidth-50);
+const Floor = new ground(vec2(0, canvas.height-floor.height), vec2(-5, 5));
+const icicle = new Icicles(vec2(halfWidth, 0), vec2(-5, 5));
+
+console.log(halfWidth - floor.height);
+console.log(halfHeight);
 
 function startGame() {
     gameLoop();
