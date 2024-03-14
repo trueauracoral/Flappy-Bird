@@ -9,6 +9,7 @@ Play here:
 - https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3 (JS spritesheet Animation tutorial)
 - https://jakesgordon.com/writing/javascript-game-foundations-loading-assets/ (Modified a bit but tutorial on loading images)
 - https://stackoverflow.com/questions/3536055/stopping-a-javascript-function-when-a-certain-condition-is-met (Helped me implement die)
+- https://developer.mozilla.org/en-US/docs/Web/API/Performance/now (counter to find frame rate)
 
 - [ ] Flappy Bird [%]
   - [X] Assets

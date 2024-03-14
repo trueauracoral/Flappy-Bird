@@ -1,5 +1,4 @@
 const canvas = document.getElementById('canvas');
-
 const ctx = canvas.getContext('2d');
 
 canvas.width = 480;
@@ -10,11 +9,12 @@ const halfHeight = canvas.height / 2;
 
 const gravity = 0.5;
 var die = false;
+var icicleList = [];
 
 var eagle = loadImage('./img/eagle.png');
 var floor = loadImage('./img/floor.png');
 var background = loadImage('./img/bg.png');
-var icicles = loadImage('./icicles.png');
+var icicles = loadImage('./img/icicles.png');
 
 function loadImage(src) {
     var img = new Image();
@@ -26,9 +26,13 @@ class Icicles {
     constructor(pos, velocity) {
         this.pos = pos;
         this.velocity = velocity;
+        console.log("An icicles was spawned");
     }
 
     update() {
+        if (die) {
+            return;
+        }
         this.pos.x += this.velocity.x;
     }
 
@@ -124,12 +128,7 @@ class bird {
 
 
 const Bird = new bird(vec2(halfWidth - 50, halfHeight), vec2(5,0), 15);
-console.log(halfWidth-50);
 const Floor = new ground(vec2(0, canvas.height-floor.height), vec2(-5, 5));
-const icicle = new Icicles(vec2(halfWidth, 0), vec2(-5, 5));
-
-console.log(halfWidth - floor.height);
-console.log(halfHeight);
 
 function startGame() {
     gameLoop();
@@ -150,15 +149,44 @@ function vec2(x, y) {
     return {x: x, y: y};
 }
 
+function died() {
+    if (die) {
+        return;
+    }
+}
+
+function getSpawn() {
+    // Top is       -420
+    // Middle is    -295
+    // Bottom is    -170
+    return Math.random() * (-170 - (-420)) + -420;
+}
+
+icicleList.push(new Icicles(vec2(canvas.width, getSpawn()), vec2(-5, 5)));
+var counter = 0;
+
 function gameUpdate() {
     Bird.update();
     Floor.update();
+    counter++;
+    if (counter % 65 == 0) {
+        icicleList.push(new Icicles(vec2(canvas.width, getSpawn()), vec2(-5, 5)));
+    }
 
+    for (var i = 0; i < icicleList.length; i++) {
+        icicleList[i].update();
+        if (icicleList[i].pos.x + icicles.width < 0) {
+            icicleList.slice(i, i - 1);
+        }
+    }
     floorCollide();
 }
 
 function gameDraw() {
     ctx.drawImage(background, 0, 0);
+    for (var i = 0; i < icicleList.length; i++) {
+        icicleList[i].draw();
+    }
     Bird.draw();
     Floor.draw();
 }
