@@ -11,20 +11,24 @@ Play here:
 - https://stackoverflow.com/questions/3536055/stopping-a-javascript-function-when-a-certain-condition-is-met (Helped me implement die)
 - https://developer.mozilla.org/en-US/docs/Web/API/Performance/now (counter to find frame rate)
 
-- [ ] Flappy Bird [%]
-  - [X] Assets
+- [-] Flappy Bird [54%]
+  - [X] Assets [100%]
     - [X] bird
     - [X] pipes
     - [X] ground
     - [X] background
-  - [ ] Pipes Wrap around
-    - [ ] Pipes Collision
+  - [X] Pipes Wrap around
   - [X] Bird and Gravity
-  - [X] Floor that can move
+  - [X] Bird rotate
   - [X] Die
+  - [X] Fall and hit floor
+  - [X] Moving Floor
+  - [ ] Pipes Collision
+  - [ ] Best and current score
+  - [ ] game over Screen
   - [ ] Pass through point and score
-  - [ ] Game Over screen with best and current score
   - [ ] Medals
+
   **IDEAS:**
   - Reverse flappy bird maybe like vimlark
   - Imagine eagle with like electrical lines or something on either end

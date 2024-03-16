@@ -143,7 +143,11 @@ function createAudio(src) {
     return audio;
 }
 
-//var bounce = createAudio('./sound/bounce.wav');
+var flap = createAudio('./sound/flap.wav');
+var swoosh = createAudio('./sound/swoosh.wav');
+var dieSound = createAudio('./sound/die.wav');
+var pointSound = createAudio('./sound/point.wav');
+var hitSound = createAudio('./sound/hit.wav');
 
 function vec2(x, y) {
     return {x: x, y: y};
@@ -152,6 +156,16 @@ function vec2(x, y) {
 function died() {
     if (die) {
         return;
+    }
+}
+
+function swooshed() {
+    if (die) {
+        return;
+    }
+    
+    if (Bird.velocity.y >= 15) {
+        swoosh.play();
     }
 }
 
@@ -169,7 +183,7 @@ function gameUpdate() {
     Bird.update();
     Floor.update();
     counter++;
-    if (counter % 65 == 0) {
+    if (!die && counter % 65 == 0) {
         icicleList.push(new Icicles(vec2(canvas.width, getSpawn()), vec2(-5, 5)));
     }
 
@@ -180,6 +194,8 @@ function gameUpdate() {
         }
     }
     floorCollide();
+    icicleCollide();
+    swooshed();
 }
 
 function gameDraw() {
@@ -187,8 +203,8 @@ function gameDraw() {
     for (var i = 0; i < icicleList.length; i++) {
         icicleList[i].draw();
     }
-    Bird.draw();
     Floor.draw();
+    Bird.draw();
 }
 
 function gameLoop() {
@@ -200,16 +216,34 @@ function gameLoop() {
     gameDraw()
 }
 
+var dieCount = 0;
 function floorCollide() {
     if (Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
         die = true;
         console.log("Collided with floor.")
+        dieCount++;
+        if (dieCount == 1) {
+            dieSound.play();
+        }
+    }
+}
+
+function icicleCollide() {
+    h1 = 162;
+    h2 = icicles.height - h1;
+    for (var i = 0; i < icicleList.length; i++) {
+        currentIcicle = icicleList[i];
+        console.log(`icicle ${i} at ${currentIcicle.pos.x}`);
+        if (Bird.pos.x > currentIcicle.pos.x && Bird.pos.x < currentIcicle.pos.x + icicles.width && Bird.pos.y > currentIcicle.pos.y && Bird.pos.x < currentIcicle.pos.y + icicles.height) {
+            console.log("hit");
+        }
     }
 }
 
 document.body.onkeyup = function(e) {
     if (die == false && e.key == " ") {
         Bird.up();
+        flap.play();
     }
 }
 
