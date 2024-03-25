@@ -10,6 +10,7 @@ const halfHeight = canvas.height / 2;
 const gravity = 0.5;
 var die = false;
 var icicleList = [];
+var points = 0;
 
 var eagle = loadImage('./img/eagle.png');
 var floor = loadImage('./img/floor.png');
@@ -26,6 +27,7 @@ class Icicles {
     constructor(pos, velocity) {
         this.pos = pos;
         this.velocity = velocity;
+        this.passedMidpoint = false;
         console.log("An icicles was spawned");
     }
 
@@ -205,6 +207,8 @@ function gameDraw() {
     }
     Floor.draw();
     Bird.draw();
+
+    drawCollisionBoxes();
 }
 
 function gameLoop() {
@@ -229,14 +233,48 @@ function floorCollide() {
 }
 
 function icicleCollide() {
-    h1 = 162;
-    h2 = icicles.height - h1;
+    var birdRight = Bird.pos.x + eagle.width / 4;
+    var birdBottom = Bird.pos.y + eagle.height;
+    var icicleGap = 72 * 3;
+    
     for (var i = 0; i < icicleList.length; i++) {
-        currentIcicle = icicleList[i];
-        console.log(`icicle ${i} at ${currentIcicle.pos.x}`);
-        if (Bird.pos.x > currentIcicle.pos.x && Bird.pos.x < currentIcicle.pos.x + icicles.width && Bird.pos.y > currentIcicle.pos.y && Bird.pos.x < currentIcicle.pos.y + icicles.height) {
-            console.log("hit");
+        var currentIcicle = icicleList[i];
+        var icicleLeft = currentIcicle.pos.x;
+        var icicleRight = currentIcicle.pos.x + icicles.width;
+        var icicleTop = currentIcicle.pos.y;
+        var icicleBottomTopPipe = currentIcicle.pos.y + (162 * 3);
+        var icicleTopBottomPipe = icicleBottomTopPipe + icicleGap; 
+        var icicleBottom = icicleTopBottomPipe + (162 * 3);
+        
+        if ((birdRight > icicleLeft && Bird.pos.x < icicleRight) &&
+        ((birdBottom > icicleTop && Bird.pos.y < icicleBottomTopPipe) ||
+        (birdBottom > icicleTopBottomPipe && Bird.pos.y < icicleBottom))) { 
+            die = true;
+            console.log("Hit the icicle");
+            break;
         }
+        if (!currentIcicle.passedMidpoint && birdRight > (currentIcicle.pos.x + icicles.width / 2)) {
+            points++;
+            console.log("Points: " + points);
+            currentIcicle.passedMidpoint = true;
+        }
+    }
+}
+
+function drawCollisionBoxes() {
+    // Draw bird collision box
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(Bird.pos.x, Bird.pos.y, eagle.width / 4, eagle.height);
+
+    // Draw icicle collision boxes
+    ctx.strokeStyle = "blue";
+    for (var i = 0; i < icicleList.length; i++) {
+        var currentIcicle = icicleList[i];
+        ctx.strokeRect(currentIcicle.pos.x, currentIcicle.pos.y, icicles.width, icicles.height - (162+72) * 3);
+        ctx.strokeRect(currentIcicle.pos.x, currentIcicle.pos.y + (162+72) * 3, icicles.width, icicles.height);
+
+        // COIN!!!
+        ctx.strokeRect(currentIcicle.pos.x + icicles.width / 2, currentIcicle.pos.y, 5, icicles.height);
     }
 }
 

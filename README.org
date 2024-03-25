@@ -23,7 +23,7 @@ Play here:
   - [X] Die
   - [X] Fall and hit floor
   - [X] Moving Floor
-  - [ ] Pipes Collision
+  - [X] Pipes Collision
   - [ ] Best and current score
   - [ ] game over Screen
   - [ ] Pass through point and score
