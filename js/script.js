@@ -151,6 +151,9 @@ var dieSound = createAudio('./sound/die.wav');
 var pointSound = createAudio('./sound/point.wav');
 var hitSound = createAudio('./sound/hit.wav');
 
+var PublicPixel = new FontFace('PublicPixel', 'url(font/PublicPixel.ttf)');
+document.fonts.add(PublicPixel)
+
 function vec2(x, y) {
     return {x: x, y: y};
 }
@@ -208,7 +211,18 @@ function gameDraw() {
     Floor.draw();
     Bird.draw();
 
-    drawCollisionBoxes();
+    // Font
+    PublicPixel.load().then(() => {
+        // Ready to use the font in a canvas context
+        ctx.font = '50px PublicPixel, Sans-serif';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 8;
+        ctx.strokeText(points, halfWidth, 85);
+        ctx.fillStyle = 'white';
+        ctx.fillText(points, halfWidth, 85);
+    });
+
+    //drawCollisionBoxes();
 }
 
 function gameLoop() {
@@ -220,15 +234,11 @@ function gameLoop() {
     gameDraw()
 }
 
-var dieCount = 0;
 function floorCollide() {
-    if (Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
+    if (!die && Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
         die = true;
         console.log("Collided with floor.")
-        dieCount++;
-        if (dieCount == 1) {
-            dieSound.play();
-        }
+        dieSound.play();
     }
 }
 
@@ -237,6 +247,11 @@ function icicleCollide() {
     var birdBottom = Bird.pos.y + eagle.height;
     var icicleGap = 72 * 3;
     
+    if (die && Bird.pos.y <= (canvas.height - (floor.height + eagle.height + 24))) {
+        Bird.velocity.y += 5;
+        Bird.pos.y += 25;
+    }
+
     for (var i = 0; i < icicleList.length; i++) {
         var currentIcicle = icicleList[i];
         var icicleLeft = currentIcicle.pos.x;
@@ -246,17 +261,20 @@ function icicleCollide() {
         var icicleTopBottomPipe = icicleBottomTopPipe + icicleGap; 
         var icicleBottom = icicleTopBottomPipe + (162 * 3);
         
-        if ((birdRight > icicleLeft && Bird.pos.x < icicleRight) &&
+        if (!die && (birdRight > icicleLeft && Bird.pos.x < icicleRight) &&
         ((birdBottom > icicleTop && Bird.pos.y < icicleBottomTopPipe) ||
         (birdBottom > icicleTopBottomPipe && Bird.pos.y < icicleBottom))) { 
             die = true;
             console.log("Hit the icicle");
+            hitSound.play();
             break;
         }
+
         if (!currentIcicle.passedMidpoint && birdRight > (currentIcicle.pos.x + icicles.width / 2)) {
             points++;
             console.log("Points: " + points);
             currentIcicle.passedMidpoint = true;
+            pointSound.play();
         }
     }
 }
