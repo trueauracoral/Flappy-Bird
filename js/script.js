@@ -11,11 +11,16 @@ const gravity = 0.5;
 var die = false;
 var icicleList = [];
 var points = 0;
+var best = 0;
 
-var eagle = loadImage('./img/eagle.png');
-var floor = loadImage('./img/floor.png');
-var background = loadImage('./img/bg.png');
-var icicles = loadImage('./img/icicles.png');
+var eagle =         loadImage('./img/eagle.png');
+var floor =         loadImage('./img/floor.png');
+var background =    loadImage('./img/bg.png');
+var icicles =       loadImage('./img/icicles.png');
+var retryButton =   loadImage('./img/Retry.png');
+var scoreMenu =     loadImage('./img/scores.png');
+
+var showFPS = false;
 
 function loadImage(src) {
     var img = new Image();
@@ -184,6 +189,22 @@ function getSpawn() {
 icicleList.push(new Icicles(vec2(canvas.width, getSpawn()), vec2(-5, 5)));
 var counter = 0;
 
+var lastCalledTime;
+function fpsCounter() {
+    // https://stackoverflow.com/questions/8279729/calculate-fps-in-canvas-using-requestanimationframe
+    if(!lastCalledTime) {
+        lastCalledTime = performance.now();
+        fps = 0;
+        return;
+    }
+    delta = (performance.now() - lastCalledTime)/1000;
+    lastCalledTime = performance.now();
+    fps = 1/delta;
+
+    fps = Math.round(fps);
+    return fps;
+}
+
 function gameUpdate() {
     Bird.update();
     Floor.update();
@@ -203,6 +224,17 @@ function gameUpdate() {
     swooshed();
 }
 
+function outlineText(text, x, y, size, outline) {
+    ctx.font = `${size}px PublicPixel, Sans-serif`;
+    if (outline) {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 8;
+        ctx.strokeText(text, x, y);
+    }
+    ctx.fillStyle = 'white';
+    ctx.fillText(text, x, y);
+}
+
 function gameDraw() {
     ctx.drawImage(background, 0, 0);
     for (var i = 0; i < icicleList.length; i++) {
@@ -213,15 +245,32 @@ function gameDraw() {
 
     // Font
     PublicPixel.load().then(() => {
-        // Ready to use the font in a canvas context
-        ctx.font = '50px PublicPixel, Sans-serif';
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 8;
-        ctx.strokeText(points, halfWidth, 85);
-        ctx.fillStyle = 'white';
-        ctx.fillText(points, halfWidth, 85);
+        if (!die) {
+            outlineText(points, halfWidth, 85, 50, true);
+        } else {
+            outlineText("Game Over", 20, 150, 50, true);
+
+            outlineText(points, halfWidth + 60, halfHeight - scoreMenu.height + 65, 20, false);
+            if (points > best) {
+                best = points;
+            }
+            outlineText(best, halfWidth + 60, halfHeight - scoreMenu.height + 125, 20, false);
+        }
     });
 
+    // Game Over/Die
+    if (die) {
+        ctx.drawImage(scoreMenu, halfWidth - scoreMenu.width / 2, halfHeight - scoreMenu.height);
+        ctx.drawImage(retryButton, halfWidth - retryButton.width / 2, halfHeight + retryButton.height);
+    }
+    
+    if (showFPS) {
+        ctx.font = '50px Arial';
+        ctx.fillStyle = 'white';
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'black';
+        ctx.strokeText(fpsCounter(), 0, 40);
+    }
     //drawCollisionBoxes();
 }
 
@@ -296,11 +345,20 @@ function drawCollisionBoxes() {
     }
 }
 
+function flapinator() {
+    Bird.up();
+    flap.play();
+}
 document.body.onkeyup = function(e) {
     if (die == false && e.key == " ") {
-        Bird.up();
-        flap.play();
+        flapinator();
     }
 }
+
+document.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === "mouse" || event.pointerType  === "touch") {
+        flapinator()
+    }
+  });
 
 gameLoop();

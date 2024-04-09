@@ -10,8 +10,11 @@ Play here:
 - https://jakesgordon.com/writing/javascript-game-foundations-loading-assets/ (Modified a bit but tutorial on loading images)
 - https://stackoverflow.com/questions/3536055/stopping-a-javascript-function-when-a-certain-condition-is-met (Helped me implement die)
 - https://developer.mozilla.org/en-US/docs/Web/API/Performance/now (counter to find frame rate)
+- https://stackoverflow.com/questions/70827887/detect-click-vs-touch-in-javascript (Detect click)
+- https://stackoverflow.com/questions/8279729/calculate-fps-in-canvas-using-requestanimationframe (FPS counter)
+- https://www.youtube.com/watch?v=1y-Qa2LtJ-E (Canvas button tutorial)
 
-- [-] Flappy Bird [83%]
+- [-] Flappy Bird [85%]
   - [X] Assets [100%]
     - [X] bird
     - [X] pipes
@@ -26,7 +29,10 @@ Play here:
   - [X] Pipes Collision
   - [X] Pass through point and score
   - [ ] game over Screen
+    - [ ] Restart Button
   - [ ] Best and current score
+  - [X] Tap Support
+  - [X] FPS counter
   - [X] Sounds [100%]
     - [X] Flap
     - [X] Hit
