@@ -117,7 +117,7 @@ class bird {
         let rotation = Math.atan2(this.velocity.y, 17);
 
         // Rotate the canvas by the calculated angle
-        ctx.rotate(rotation);
+        //ctx.rotate(rotation);
 
         // Draw the bird
         ctx.drawImage(
@@ -356,9 +356,36 @@ document.body.onkeyup = function(e) {
 }
 
 document.addEventListener('pointerdown', (event) => {
-    if (event.pointerType === "mouse" || event.pointerType  === "touch") {
+    if (die == false && (event.pointerType === "mouse" || event.pointerType  === "touch")) {
         flapinator()
     }
-  });
+
+    var mouseCoords = getMousePosition(canvas, event);
+    console.log(mouseCoords);
+    var restartX = halfWidth - retryButton.width / 2;
+    var restartY = halfHeight + retryButton.height;
+    if ((mouseCoords.x < restartX + retryButton.width && mouseCoords.x > restartX) && 
+        (mouseCoords.y > restartY && mouseCoords.y < restartY + retryButton.height)) {
+        console.log("Clicked restart");
+        restart();
+    }
+});
+
+function restart() {
+    die = false;
+    counter = 0;
+    icicleList = [];
+    points = 0;
+    Bird.pos = vec2(halfWidth - 50, halfHeight);
+    Bird.velocity = vec2(5,0);
+}
+
+// https://www.geeksforgeeks.org/how-to-get-the-coordinates-of-a-mouse-click-on-a-canvas-element/
+function getMousePosition(canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    return {x: x, y: y};
+}
 
 gameLoop();

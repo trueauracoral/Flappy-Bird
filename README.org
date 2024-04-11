@@ -13,8 +13,9 @@ Play here:
 - https://stackoverflow.com/questions/70827887/detect-click-vs-touch-in-javascript (Detect click)
 - https://stackoverflow.com/questions/8279729/calculate-fps-in-canvas-using-requestanimationframe (FPS counter)
 - https://www.youtube.com/watch?v=1y-Qa2LtJ-E (Canvas button tutorial)
+- https://www.geeksforgeeks.org/how-to-get-the-coordinates-of-a-mouse-click-on-a-canvas-element/ (Get mouse click)
 
-- [-] Flappy Bird [85%]
+- [X] Flappy Bird [100%]
   - [X] Assets [100%]
     - [X] bird
     - [X] pipes
@@ -28,9 +29,9 @@ Play here:
   - [X] Moving Floor
   - [X] Pipes Collision
   - [X] Pass through point and score
-  - [ ] game over Screen
-    - [ ] Restart Button
-  - [ ] Best and current score
+  - [X] game over Screen
+    - [X] Restart Button
+  - [X] Best and current score
   - [X] Tap Support
   - [X] FPS counter
   - [X] Sounds [100%]
