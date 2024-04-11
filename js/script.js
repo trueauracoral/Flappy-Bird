@@ -88,7 +88,7 @@ class bird {
     }
     
     update() {
-        if (die == true) {
+        if (die) {
             return;
         }
         this.velocity.y += gravity;
@@ -111,25 +111,15 @@ class bird {
         // Sprite Sheet moment
         var width = eagle.width / 4;
         var height = eagle.height;
-        ctx.save();
-
-        ctx.translate(this.pos.x + this.radius / 2, this.pos.y + this.radius / 2);
-        let rotation = Math.atan2(this.velocity.y, 17);
-
-        // Rotate the canvas by the calculated angle
-        //ctx.rotate(rotation);
 
         // Draw the bird
         ctx.drawImage(
             eagle, 
             this.frameX * width, 0,
             width, height,
-            -this.radius / 2, -this.radius / 2, // Draw the bird centered at (0, 0)
+            this.pos.x, this.pos.y,
             width, height
         );
-
-        // Restore the previous transformation state of the canvas
-        ctx.restore();
     };
 }
 
@@ -284,7 +274,7 @@ function gameLoop() {
 }
 
 function floorCollide() {
-    if (!die && Bird.pos.y >= (canvas.height - (floor.height + eagle.height + 24))) {
+    if (!die && Bird.pos.y >= (canvas.height - (floor.height + eagle.height))) {
         die = true;
         console.log("Collided with floor.")
         dieSound.play();
@@ -364,7 +354,7 @@ document.addEventListener('pointerdown', (event) => {
     console.log(mouseCoords);
     var restartX = halfWidth - retryButton.width / 2;
     var restartY = halfHeight + retryButton.height;
-    if (die == true && (mouseCoords.x < restartX + retryButton.width && mouseCoords.x > restartX) && 
+    if (die && (mouseCoords.x < restartX + retryButton.width && mouseCoords.x > restartX) && 
         (mouseCoords.y > restartY && mouseCoords.y < restartY + retryButton.height)) {
         console.log("Clicked restart");
         restart();
