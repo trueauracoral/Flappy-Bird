@@ -364,7 +364,7 @@ document.addEventListener('pointerdown', (event) => {
     console.log(mouseCoords);
     var restartX = halfWidth - retryButton.width / 2;
     var restartY = halfHeight + retryButton.height;
-    if ((mouseCoords.x < restartX + retryButton.width && mouseCoords.x > restartX) && 
+    if (die == true && (mouseCoords.x < restartX + retryButton.width && mouseCoords.x > restartX) && 
         (mouseCoords.y > restartY && mouseCoords.y < restartY + retryButton.height)) {
         console.log("Clicked restart");
         restart();
