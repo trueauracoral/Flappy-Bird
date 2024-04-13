@@ -20,7 +20,7 @@ var icicles =       loadImage('./img/icicles.png');
 var retryButton =   loadImage('./img/Retry.png');
 var scoreMenu =     loadImage('./img/scores.png');
 
-var showFPS = false;
+var showFPS = true;
 
 function loadImage(src) {
     var img = new Image();
@@ -264,13 +264,19 @@ function gameDraw() {
     //drawCollisionBoxes();
 }
 
+var oldTime = new Date();
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
+    let currentTime = new Date();
+    var timeDelta = currentTime - oldTime / 100;
     window.requestAnimationFrame(gameLoop);
-    
-    gameUpdate();
-    gameDraw()
+    if (timeDelta > 33.4) {
+        
+        gameUpdate();
+        gameDraw()
+    }
+    oldTime = new Date();
 }
 
 function floorCollide() {
